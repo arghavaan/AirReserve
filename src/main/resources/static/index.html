@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>::Air Reserve ::</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <form>
+            <div class="row mt-5">
+                <h4>Specify your information for searching flights</h4>
+            </div>
+            <div class="row m-4">
+                <label class="p-1">
+                    Flight Type :
+                </label>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-secondary active">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Round-Trip
+                    </label>
+                    <label class="btn btn-outline-secondary">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> One-Way
+                    </label>
+                    <label class="btn btn-outline-secondary">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> Multi-City
+                    </label>
+                </div>
+            </div>
+            <div class="row m-4">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="From">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="To">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Departure">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Return">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</body>
+</html>

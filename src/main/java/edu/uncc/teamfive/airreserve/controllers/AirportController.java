@@ -12,7 +12,7 @@ public class AirportController {
     @GetMapping("/airports")
     public Airport[] index(@RequestParam(name="name", required=false, defaultValue="Charlotte") String name, Model model) {
         model.addAttribute("name", name);
-        var testAirport = new Airport();
+        Airport testAirport = new Airport();
         testAirport.AirportID = 1;
         testAirport.Name = "JFK";
         testAirport.CityName = "NY";

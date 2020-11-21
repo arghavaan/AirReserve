@@ -73,13 +73,22 @@
 
     	    e.preventDefault(); // avoid to execute the actual submit of the form.
 
-    	    var form = $(this);
-    	    var url = form.attr('action');
+    	    var data = {};
+    	    var form = $(this)[0];
+    	    var url = form.action;
+    	    
+    	    data.options = $('input[name="options"]:checked').val();
+    	    data.from = form.from.value;
+    	    data.to = form.to.value;
+    	    data.departure = form.departure.value;
+    	    data.return = form.return.value;
     	    
     	    $.ajax({
     	           type: "POST",
+    	           contentType: "application/json",
     	           url: url,
-    	           data: form.serialize(), // serializes the form's elements.
+    	           dataType: 'json',
+    	           data: JSON.stringify(data), // serializes the form's elements.
     	           success: function(data)
     	           {
     	               alert(data);

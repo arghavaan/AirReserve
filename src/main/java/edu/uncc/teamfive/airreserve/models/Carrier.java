@@ -12,17 +12,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Carrier {
 
     @JsonProperty("CarrierId")
-    private Long carrierId;
+    private String carrierId;
 	@JsonProperty("Name")
     private String name;
 	
 	
     @JsonProperty("CarrierId")
-    public Long getCarrierId() {
+    public String getCarrierId() {
 		return carrierId;
 	}
     @JsonProperty("CarrierId")
-	public void setCarrierId(Long carrierId) {
+	public void setCarrierId(String carrierId) {
 		this.carrierId = carrierId;
 	}
 	@JsonProperty("Name")

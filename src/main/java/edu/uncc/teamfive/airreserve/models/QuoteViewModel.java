@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "QuoteId",
     "Origin",
     "Destination",
-    "Price"
+    "Price",
+    "IsDirect",
+    "Carrier"
 })
 public class QuoteViewModel {
 

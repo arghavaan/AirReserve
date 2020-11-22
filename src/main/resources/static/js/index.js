@@ -91,6 +91,7 @@
     	           data: JSON.stringify(data), // serializes the form's elements.
     	           success: function(data)
     	           {
+	        		   $("#availableFlights").empty();
     	        	   if(data[0]){
     	        		   for(var i=0; i<data.length; i++){
     	        			   var availableFlight=$("<div class='list-group'> <a href='#' class='list-group-item list-group-item-action'> <div class='d-flex w-100 justify-content-between'> <h4>" + data[i].Origin.PlaceName + "<span>&#9992;</span>" + data[i].Destination.PlaceName + "</h4> <small><b>$" + data[i].Price + "</b></small> </div> <p>Direct Flight : " + data[i].IsDirect + "</p> <p>" + data[i].Carrier.Name + "</p> </a> </div>");

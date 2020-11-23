@@ -1,4 +1,14 @@
-   $(document).ready(function(){
+var allFlights = [];
+
+function setDetails(i){
+	var data = allFlights[i];
+	$('#dtl-from').html(data.Origin.PlaceName + " (" + data.Origin.CountryName + ")");
+	$('#dtl-to').html(data.Destination.PlaceName + " (" + data.Destination.CountryName + ")");
+	$('#dtl-price').html("$" + data.Price);
+	$('#dtl-al').html(data.Carrier.Name);
+}
+
+$(document).ready(function(){
     	$("#from").keyup(function(){
     		var from = $('#from').val();
     		$.ajax({     
@@ -93,8 +103,9 @@
     	           {
 	        		   $("#availableFlights").empty();
     	        	   if(data[0]){
+						   allFlights = data;
     	        		   for(var i=0; i<data.length; i++){
-    	        			   var availableFlight=$("<div class='list-group'> <a href='#' class='list-group-item list-group-item-action'> <div class='d-flex w-100 justify-content-between'> <h4>" + data[i].Origin.PlaceName + "<span>&#9992;</span>" + data[i].Destination.PlaceName + "</h4> <small><b>$" + data[i].Price + "</b></small> </div> <p>Direct Flight : " + data[i].IsDirect + "</p> <p>" + data[i].Carrier.Name + "</p> </a> </div>");
+    	        			   var availableFlight=$("<div class='list-group'> <div href='#' class='list-group-item list-group-item-action'> <div class='d-flex w-100 justify-content-between'> <h4>" + data[i].Origin.PlaceName + "<span>&#9992;</span>" + data[i].Destination.PlaceName + "</h4> <small><b>$" + data[i].Price + "</b></small> </div> <p>Direct Flight : " + data[i].IsDirect + "</p> <p>" + data[i].Carrier.Name + "</p><button onclick='setDetails("+ i +")' type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#detailsModal\">Details</button> </div></div>");
             	       	    	$("#availableFlights").append(availableFlight);
     	        		   }
     	        		   window.scrollBy(0, 200);

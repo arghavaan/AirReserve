@@ -42,7 +42,7 @@ public class AirportController {
     }
 
     @GetMapping("/airportslive")
-    public Place[] live(@RequestParam(name="name", required=false, defaultValue="Charlotte") String name) throws IOException {
+    public FastPlace[] live(@RequestParam(name="name", required=false, defaultValue="Charlotte") String name) throws IOException {
     	if(name != null) {
     	 return	apiServices.getPlaces(name);    		
     	}

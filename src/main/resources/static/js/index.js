@@ -9,76 +9,61 @@ function setDetails(i){
 }
 
 $(document).ready(function(){
-    	$("#from").keyup(function(){
-    		var from = $('#from').val();
-    		$.ajax({     
-    			type: "GET",
-    		     url: 'airportslive?name=' + from,
-    		     dataType: "json",
-    		     success: function (data) {
-    		    	 console.log(data);
-    		    	 	if(data[0]){
-		    	 			var placeNames = [];
-    		    	 		for(i=0; i<data.length; i++){
-    		    	 			placeNames.push(data[i].PlaceId + ' ' + data[i].PlaceName);
-    		    	 		}
-    		    	 		
-		    		    	$( "#from" ).autocomplete({
-		    		             source: placeNames,
-		    		             minLength:0
-		    		        }).bind('focus', function(){ $(this).autocomplete("search"); } );
-    		    	 	}else{
-    		    	 		
-    		    	 	}
-    		         }
-    		});
-    	});
-    	
-    	$("#to").keyup(function(){
-    		var to = $('#to').val();
-    		$.ajax({     
-    			type: "GET",
-    		     url: 'airportslive?name=' + to,
-    		     dataType: "json",
-    		     success: function (data) {
-    		    	 if(data[0]){
-		    	 			var placeNames = [];
- 		    	 		for(i=0; i<data.length; i++){
- 		    	 			placeNames.push(data[i].PlaceId + ' ' + data[i].PlaceName);
- 		    	 		}
-		    		    	$( "#to" ).autocomplete({
-		    		             source: placeNames,
-		    		             minLength:0
-		    		        }).bind('focus', function(){ $(this).autocomplete("search"); } );
- 		    	 	}else{
- 		    	 		
- 		    	 	}
- 		         }
-    		});
-    	});
 
-    	$("input[name=options]:radio").click(function(){
-    		
-    		$("#option1").parent().removeClass('active');
-    		$("#option2").parent().removeClass('active');
-    		$("#option3").parent().removeClass('active');
+	jQuery.ui.autocomplete.prototype._resizeMenu = function () {
+		var ul = this.menu.element;
+		ul.outerWidth(this.element.outerWidth());
+	}
 
-    		$(this.parentNode).addClass('active');
-            
-    		switch (this.id) {
-    	    case 'option1':
-    	    	$("#return").prop('required', true);
-    	    	$("#return").prop('disabled', false);
-    	      break;
-    	    case 'option2':
-    	    	$("#return").prop('required', false);
-    	    	$("#return").prop('disabled', true);
-    	      break;
-    	    case 'option3':
-      	      break;
-    	  }
-    	});
-    	
+
+	$( "#from" ).autocomplete({
+		source: function (request, response) {
+			$.ajax({
+				url: "airportslive?name=" + request.term,
+				dataType: "json",
+				success: function (data) {
+					response(data);
+				}
+			});
+		},
+		minLength: 2,
+		select: function (event, ui) {
+			event.preventDefault();
+			$('#from').val(ui.item.label);
+			$('#fromid').val(ui.item.value);
+		}
+	});
+
+	$( "#to" ).autocomplete({
+		source: function (request, response) {
+			$.ajax({
+				url: "airportslive?name=" + request.term,
+				dataType: "json",
+				success: function (data) {
+					response(data);
+				}
+			});
+		},
+		minLength: 2,
+		select: function (event, ui) {
+			event.preventDefault();
+			$('#to').val(ui.item.label);
+			$('#toid').val(ui.item.value);
+		}
+	});
+		$('input[type=radio][name=options]').change(function() {
+			console.log('CHECK CHECK!');
+			if (this.value == 'round') {
+				$("#return").prop('required', true);
+				$("#return").prop('disabled', false);
+			}
+			else if (this.value == 'oneway') {
+				$("#return").prop('required', false);
+				$("#return").prop('disabled', true);
+			}
+		});
+
+
     	$("#flightSearch").submit(function(e) {
 
     	    e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -88,8 +73,8 @@ $(document).ready(function(){
     	    var url = form.action;
     	    
     	    data.options = $('input[name="options"]:checked').val();
-    	    data.from = form.from.value;
-    	    data.to = form.to.value;
+    	    data.from = form.fromid.value;
+    	    data.to = form.toid.value;
     	    data.departure = form.departure.value;
     	    data.return = form.return.value;
     	    

@@ -19,6 +19,24 @@
 		  margin: 0;
 		  scroll-behavior: smooth;
 		}
+
+        ul.ui-autocomplete{
+            list-style-type: none; /* Remove bullets */
+            padding: 0; /* Remove padding */
+            margin: 0; /* Remove margins */
+        }
+
+        li.ui-menu-item{
+            background-color: white;
+            padding: 5px;
+            border-bottom: solid 1px #eee;
+        }
+
+        .form-control:disabled, .form-control[readonly] {
+            background-color: #e9ecef;
+            opacity: 1;
+            color: #e9ecef;
+        }
 		
 		.bg {
 		  background-image: url("images/flight-hero.jpg");
@@ -32,9 +50,9 @@
 		  position: absolute;
 		  bottom: 150px;
 		  left: 200px;
-		  color: white;
-		  padding-left: 20px;
-		  padding-right: 20px;
+		  padding: 20px;
+          background-color: #ffffff88;
+          border-radius: 10px;
 		}
 	</style>
 </head>
@@ -80,44 +98,46 @@
     </div>
     <div class="bg"></div>
     <div class="container search-block">
-		<div class="row mt-5">
+		<div class="p-2">
 			<h4>Book Air Tickets</h4>
-		</div>
-	    <form id="flightSearch" autocomplete="off" action="getQuotes">
-            <div class="row m-4">
-                <label class="p-1">
-                    Flight Type :
-                </label>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-dark">
-                        <input type="radio" name="options" id="option1" autocomplete="off" required> Round-Trip
+
+            <form id="flightSearch" autocomplete="off" action="getQuotes">
+                <div>
+                    <label class="p-1">
+                        Flight Type :
                     </label>
-                    <label class="btn btn-outline-dark">
-                        <input type="radio" name="options" id="option2" autocomplete="off" required> One-Way
-                    </label>
-                    <label class="btn btn-outline-dark">
-                        <input type="radio" name="options" id="option3" autocomplete="off" required> Multi-City
-                    </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-dark active">
+                            <input type="radio" checked="checked" name="options" value="round" autocomplete="off" required> Round-Trip
+                        </label>
+                        <label class="btn btn-outline-dark">
+                            <input type="radio" name="options" value="oneway" autocomplete="off" required> One-Way
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="row m-4">
-                <div class="col">
-                    <input type="text" id="from" class="form-control ui-widget" placeholder="From" required>
+                <div class="row m-1 mt-4">
+                    <div class="col">
+                        <input type="text" id="from" class="form-control ui-widget" placeholder="From" required>
+                        <input type="hidden" id="fromid" value="">
+                    </div>
+                    <div class="col">
+                        <input type="text" id="to" class="form-control ui-widget" placeholder="To" required>
+                        <input type="hidden" id="toid" value="">
+                    </div>
                 </div>
-                <div class="col">
-                    <input type="text" id="to" class="form-control ui-widget" placeholder="To" required>
+                <div class="row m-1 mt-2">
+                    <div class="col">
+                        <input type="date" id="departure" class="form-control" placeholder="Departure" required>
+                    </div>
+                    <div class="col">
+                        <input type="date" id="return" class="form-control" placeholder="Return">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-danger" style="width: 100%" value="Search Flights">
+                    </div>
                 </div>
-                <div class="col">
-                    <input type="date" id="departure" class="form-control" placeholder="Departure" required>
-                </div>
-                <div class="col">
-                    <input type="date" id="return" class="form-control" placeholder="Return">
-                </div>
-                <div class="col">
-                  <input type="submit" class="btn btn-info" value="Submit Button">
-                </div>
-            </div>
-        </form>    
+            </form>
+        </div>
 	</div>
 	  
 	<div class="container">

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import edu.uncc.teamfive.airreserve.models.FastPlace;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class APIServices {
 	private static final String QUERYSEPARATOR = "?";
 	private static final String FORWARDSLASHSEPARATOR = "/";
 	
-	public Place[] getPlaces(String name) throws IOException {
+	public FastPlace[] getPlaces(String name) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -39,22 +40,18 @@ public class APIServices {
             String jsonData = response.body().string();
             JSONObject Jobject = new JSONObject(jsonData);
             JSONArray Jarray = Jobject.getJSONArray("Places");
-            List<Place> placelist = new ArrayList<Place>();
+            List<FastPlace> placelist = new ArrayList<FastPlace>();
             for (int i = 0; i < Jarray.length(); i++) {
                 JSONObject object     = Jarray.getJSONObject(i);
-                Place place = new Place();
-                place.setPlaceId(object.getString("PlaceId"));
-                place.setPlaceName(object.getString("PlaceName"));
-                place.setCountryId(object.getString("CountryId"));
-                place.setRegionId(object.getString("RegionId"));
-                place.setCityId(object.getString("CityId"));
-                place.setCountryName(object.getString("CountryName"));
+                FastPlace place = new FastPlace();
+                place.value = object.getString("PlaceId");
+                place.label = object.getString("PlaceName") + " (" + object.getString("CountryName") + ")";
                 placelist.add(place);
             }
-            return placelist.toArray(new Place[0]);
+            return placelist.toArray(new FastPlace[0]);
         }
 
-        return new Place[0];
+        return new FastPlace[0];
 	}
 	
 	public List<QuoteViewModel> getQuotes(Map<String, Object> model) throws IOException {
@@ -62,12 +59,12 @@ public class APIServices {
 		List<QuoteViewModel> quoteslist = new ArrayList<QuoteViewModel>();
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US").newBuilder();
         
-        String originplace = model.get("from").toString().split(" ")[0];
-        String destinationplace = model.get("to").toString().split(" ")[0];
-        String outboundpartialdate = model.get("departure").toString().split(" ")[0];
+        String originplace = model.get("from").toString();
+        String destinationplace = model.get("to").toString();
+        String outboundpartialdate = model.get("departure").toString();
         String inboundpartialdate = "";
         if(model.get("options").toString() == "RoundTrip") {
-        	inboundpartialdate = model.get("return").toString().split(" ")[0];
+        	inboundpartialdate = model.get("return").toString();
         }        
  
 

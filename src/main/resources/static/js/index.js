@@ -92,7 +92,7 @@ $(document).ready(function(){
     	        	   if(data[0]){
 						   allFlights = data;
     	        		   for(var i=0; i<data.length; i++){
-    	        			   var availableFlight=$("<div class='list-group'> <div href='#' class='list-group-item list-group-item-action'> <div class='d-flex w-100 justify-content-between'> <h4>" + data[i].Origin.PlaceName + "<span>&#9992;</span>" + data[i].Destination.PlaceName + "</h4> <small><b>$" + data[i].Price + "</b></small> </div> <p>Direct Flight : " + data[i].IsDirect + "</p> <p>" + data[i].Carrier.Name + "</p><button onclick='setDetails("+ i +")' type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#detailsModal\">Details</button> </div></div>");
+    	        			   var availableFlight=$("<div class='list-group'> <div href='#' class='list-group-item list-group-item-action'> <div class='d-flex w-100 justify-content-between'> <h5>" + data[i].Origin.PlaceName + "  <span> &#9992; </span>  " + data[i].Destination.PlaceName + "</h5> <small><b>$" + data[i].Price + "</b></small> </div> <span class=\"flight-" + (data[i].IsDirect ? "direct" : "indirect") + "\"> " + (data[i].IsDirect ? "Direct Flight" : "Indirect Flight")  + "</span> <span class='ml-2'>" + data[i].Carrier.Name + "</span><button onclick='setDetails("+ i +")' type=\"button\" class=\"btn btn-primary float-right\" data-toggle=\"modal\" data-target=\"#detailsModal\">Details</button> </div></div>");
             	       	    	$("#availableFlights").append(availableFlight);
     	        		   }
     	        	   }else{

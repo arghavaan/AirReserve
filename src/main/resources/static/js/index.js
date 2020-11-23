@@ -71,13 +71,15 @@ $(document).ready(function(){
     	    var data = {};
     	    var form = $(this)[0];
     	    var url = form.action;
+
     	    
     	    data.options = $('input[name="options"]:checked').val();
     	    data.from = form.fromid.value;
     	    data.to = form.toid.value;
     	    data.departure = form.departure.value;
     	    data.return = form.return.value;
-    	    
+			$("#availableFlights").html('<div class="spinner-border text-danger" role="status"><span class="sr-only">Loading...</span></div>');
+			$("#result-flights").show();
     	    $.ajax({
     	           type: "POST",
     	           contentType: "application/json",
@@ -86,17 +88,15 @@ $(document).ready(function(){
     	           data: JSON.stringify(data), // serializes the form's elements.
     	           success: function(data)
     	           {
-	        		   $("#availableFlights").empty();
+					   $("#availableFlights").html('');
     	        	   if(data[0]){
 						   allFlights = data;
     	        		   for(var i=0; i<data.length; i++){
     	        			   var availableFlight=$("<div class='list-group'> <div href='#' class='list-group-item list-group-item-action'> <div class='d-flex w-100 justify-content-between'> <h4>" + data[i].Origin.PlaceName + "<span>&#9992;</span>" + data[i].Destination.PlaceName + "</h4> <small><b>$" + data[i].Price + "</b></small> </div> <p>Direct Flight : " + data[i].IsDirect + "</p> <p>" + data[i].Carrier.Name + "</p><button onclick='setDetails("+ i +")' type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#detailsModal\">Details</button> </div></div>");
             	       	    	$("#availableFlights").append(availableFlight);
     	        		   }
-    	        		   window.scrollBy(0, 200);
-    	        		   
     	        	   }else{
-    	        		 	$("#availableFlights").append("<p>No Flights are available on selected dates!!!</p>");
+    	        		 	$("#availableFlights").html("<p class='no-flight'>No Flights are available on selected dates!!!</p>");
     	        	   }
     	           }
     	         });

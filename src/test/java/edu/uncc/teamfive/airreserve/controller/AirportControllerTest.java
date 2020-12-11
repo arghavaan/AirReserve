@@ -1,17 +1,13 @@
 package edu.uncc.teamfive.airreserve.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 
-import java.net.ConnectException;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,11 +20,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -37,12 +33,6 @@ import org.springframework.ui.Model;
 import edu.uncc.teamfive.airreserve.Services.APIServices;
 import edu.uncc.teamfive.airreserve.controllers.AirportController;
 import edu.uncc.teamfive.airreserve.models.Airport;
-import edu.uncc.teamfive.airreserve.models.Place;
-import edu.uncc.teamfive.airreserve.models.QuoteViewModel;
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * 
@@ -64,14 +54,13 @@ public class AirportControllerTest {
 
 	private AirportController classUnderTest;
 	private MockMvc mockMvc;
-	@Autowired
 	private APIServices apiServices;
 
 	@BeforeEach
 	public void setup() {
 		classUnderTest = new AirportController();
 		mockMvc = MockMvcBuilders.standaloneSetup(classUnderTest).build();
-
+		apiServices = new APIServices();
 	}
 
 	@DisplayName("when application tries the /airports api, the values that we have injected are as expected")
@@ -119,21 +108,6 @@ public class AirportControllerTest {
 
 	}
 
-	/*
-	 * @DisplayName("when application tries to connect to the skyscanner api with /airportsLive api, "
-	 * + "gives null pointer error because it doesn't connect to api")
-	 * 
-	 * @Test public void airportsLiveCall_EqualstheValues() throws Exception {
-	 * assertThrows(NullPointerException.class, () ->{ MvcResult result =
-	 * mockMvc.perform(get("/airportslive")) .andExpect(status().isOk())
-	 * .andReturn();
-	 * 
-	 * classUnderTest.live("Charlotte"); String content =
-	 * result.getResponse().getContentAsString(); Place[] place =
-	 * apiServices.getPlaces("Charlotte"); List<Object> placelist =
-	 * Arrays.asList(place); assertNotNull(content); assertNotNull(placelist); }); }
-	 */
-
 	@DisplayName("gives 400 error - when we submit the /airportslive")
 	@Test
 	public void airportsLiveCall_notConnected() throws Exception {
@@ -155,21 +129,46 @@ public class AirportControllerTest {
 
 	}
 
-	@DisplayName("when application tries to connect to the skyscanner api with /getQuotes api, " + " connected")
-//	@Test	
-	public void getQuotesConnected() throws Exception {
-		Map<String, Object> model = new HashMap<>();
-		List<QuoteViewModel> quoteslist = new ArrayList<QuoteViewModel>();
-		String originplace = "Charlotte";
-		String destinationplace = "North Carolina";
-		String outboundpartialdate = "10/19/2020";
-		String inboundpartialdate = "11/12/2020";
-		model.put(originplace, originplace);
-		model.put(destinationplace, destinationplace);
-		model.put(outboundpartialdate, outboundpartialdate);
-		model.put(inboundpartialdate, inboundpartialdate);
-		classUnderTest.quotes(model);
+	@DisplayName("Testing the apiService, with the place")
+	@Test
+	public void liveTest_Place() throws IOException {
 
+		apiServices.getPlaces("Charlotte");
+		ReflectionTestUtils.setField(classUnderTest, "apiServices", apiServices);
+		assertNotNull(classUnderTest.live("Charlotte"));
+	}
+	
+	@DisplayName("Testing the apiService, withoutthe place")
+	@Test
+	public void liveTest_PlaceEmpty() throws IOException {
+
+		apiServices.getPlaces("");
+		ReflectionTestUtils.setField(classUnderTest, "apiServices", apiServices);
+		assertNotNull(classUnderTest.live(""));
+		
+	}
+	
+	@DisplayName("Testing the apiService, withoutthe place")
+	@Test
+	public void liveTest_PlaceNull() throws IOException {
+
+		apiServices.getPlaces(null);
+		ReflectionTestUtils.setField(classUnderTest, "apiServices", apiServices);
+		assertNull(classUnderTest.live(null));
+		
+	}
+	
+	@Test
+	public void getQuotes() throws IOException {
+		Map<String, Object> model = new HashMap<>();
+	     model.put("from", "CLT-sky");
+	     model.put("to", "JFK-sky");
+	     model.put("departure", "2020-11-26");
+		model.put("options", "RoundTrip");
+		model.put("return", "2020-12-16");
+		apiServices.getQuotes(model);
+		ReflectionTestUtils.setField(classUnderTest, "apiServices", apiServices);
+		assertNotNull(classUnderTest.quotes(model));
 	}
 
 }

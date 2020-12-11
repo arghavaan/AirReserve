@@ -70,6 +70,19 @@ public class APIServicesTest {
 		model.put("return", "2020-12-16");
 		List<QuoteViewModel> quoteslist = classUnderTest.getQuotes(model);
 		assertNotNull(quoteslist);
+		assertNotNull(model);	
+	}
+	
+	@Test
+	public void getQuotes_FutureDates() throws IOException {
+		Map<String, Object> model = new HashMap<>();
+	     model.put("from", "CLT-sky");
+	     model.put("to", "JFK-sky");
+	     model.put("departure", "2020-12-16");
+		model.put("options", "RoundTrip");
+		model.put("return", "2020-12-26");
+		List<QuoteViewModel> quoteslist = classUnderTest.getQuotes(model);
+		assertNotNull(quoteslist);
 		assertNotNull(model);
 
 		

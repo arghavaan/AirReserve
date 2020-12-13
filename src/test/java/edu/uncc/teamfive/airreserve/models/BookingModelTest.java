@@ -32,7 +32,7 @@ public class BookingModelTest {
 		classUnderTest.setPaymentMethod(null);
 		
 		classUnderTest.setPerson(person);
-		classUnderTest.setQuoteViewModel(null);
+		classUnderTest.setComfirmationViewModel(null);
 		
 		assertNull(classUnderTest.getPaymentMethod());
 		assertNotNull(classUnderTest.getPerson());
@@ -54,10 +54,10 @@ public class BookingModelTest {
 		classUnderTest.setPaymentMethod(null);
 		
 		classUnderTest.setPerson(null);
-		classUnderTest.setQuoteViewModel(null);
+		classUnderTest.setComfirmationViewModel(null);
 		assertNull(classUnderTest.getPaymentMethod());
 		assertNull(classUnderTest.getPerson());
-		assertNull(classUnderTest.getQuoteViewModel());
+		assertNull(classUnderTest.getComfirmationViewModel());
 		
 	}
 

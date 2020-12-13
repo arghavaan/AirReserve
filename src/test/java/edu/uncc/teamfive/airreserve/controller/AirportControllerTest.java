@@ -194,6 +194,8 @@ public class AirportControllerTest {
 		model.put("cvcpwd", "cvcpwd");
 		model.put("expmonth", 3);
 		model.put("expyear", 1);
+		model.put("quoteId", "quoteId");
+		model.put("flightDetails", "flightDetails");
 		bookingService.bookNow(model);
 		ReflectionTestUtils.setField(classUnderTest, "bookingService", bookingService);
 		assertNotNull(classUnderTest.book(model));
@@ -217,6 +219,9 @@ public class AirportControllerTest {
 		model.put("cvcpwd", "cvcpwd");
 		model.put("expmonth", 3);
 		model.put("expyear", 1);
+		model.put("quoteId", "quoteId");
+		model.put("flightDetails", "flightDetails");
+		
 		bookingService.bookNow(model);
 		ReflectionTestUtils.setField(classUnderTest, "bookingService", bookingService);
 		assertNotNull(classUnderTest.book(model));
@@ -239,6 +244,8 @@ public class AirportControllerTest {
 		model.put("cvcpwd", "cvcpwd");
 		model.put("expmonth", 3);
 		model.put("expyear", 1);
+		model.put("quoteId", "quoteId");
+		model.put("flightDetails", "flightDetails");
 		
 		bookingService.bookNow(model);
 		ReflectionTestUtils.setField(classUnderTest, "bookingService", bookingService);
@@ -248,7 +255,7 @@ public class AirportControllerTest {
 	
 	@Test
 	public void bookFlight_ExceptionIfNotCredit() throws IOException {
-		assertThrows(NullPointerException.class, () -> {
+		
 		Map<String, Object> model = new HashMap<>();
 		model.put("price", 350.00);
 		model.put("email", "emailId");
@@ -263,7 +270,31 @@ public class AirportControllerTest {
 		bookingService.bookNow(model);
 		ReflectionTestUtils.setField(classUnderTest, "bookingService", bookingService);
 		classUnderTest.book(model);
-		});
+		
+	}
+	
+	@Test
+	public void bookFlight_Exception() throws IOException {
+		Map<String, Object> model = new HashMap<>();
+		model.put("price", 350.00);
+		model.put("email", "emailId");
+		model.put("uname", "user");
+		model.put("pwd", "password");
+		model.put("fname", "firstName");
+		model.put("lname", "lastName");
+		model.put("mobile", "mobile");
+		model.put("passno","passportNumber");
+		model.put("paymentType", "Credit");
+		model.put("holdername", "holdername");
+		model.put("cardno", "cardno");
+		model.put("cvcpwd", "cvcpwd");
+		model.put("expmonth", 3);
+		model.put("expyear", 1);
+		
+		
+		bookingService.bookNow(model);
+		ReflectionTestUtils.setField(classUnderTest, "bookingService", bookingService);
+		assertNotNull(classUnderTest.book(model));
 	}
 	
 

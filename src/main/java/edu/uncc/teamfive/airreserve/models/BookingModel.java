@@ -4,7 +4,7 @@ public class BookingModel {
 
 	private Person person;
 	private PaymentMethod paymentMethod;
-	private QuoteViewModel quoteViewModel;
+	private ComfirmationViewModel comfirmationViewModel;
 	
 	
 	public Person getPerson() {
@@ -19,12 +19,13 @@ public class BookingModel {
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
-	public QuoteViewModel getQuoteViewModel() {
-		return quoteViewModel;
+	public ComfirmationViewModel getComfirmationViewModel() {
+		return comfirmationViewModel;
 	}
-	public void setQuoteViewModel(QuoteViewModel quoteViewModel) {
-		this.quoteViewModel = quoteViewModel;
+	public void setComfirmationViewModel(ComfirmationViewModel comfirmationViewModel) {
+		this.comfirmationViewModel = comfirmationViewModel;
 	}
+
 	
 	
 }

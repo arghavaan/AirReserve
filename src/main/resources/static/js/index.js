@@ -194,6 +194,7 @@ $(document).ready(function(){
     	    data.expmonth = form.expmonth.value;
     	    data.expyear = form.expyear.value;
     	    data.flightDetails = selectedFlight;
+    	    data.quoteId = selectedFlight.QuoteId;
     	    data.price = selectedFlight.Price;
     	    data.paymentType = "Credit";
 

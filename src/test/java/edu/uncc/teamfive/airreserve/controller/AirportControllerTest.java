@@ -3,6 +3,7 @@ package edu.uncc.teamfive.airreserve.controller;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -31,8 +33,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
 import edu.uncc.teamfive.airreserve.Services.APIServices;
+import edu.uncc.teamfive.airreserve.Services.BookingService;
 import edu.uncc.teamfive.airreserve.controllers.AirportController;
 import edu.uncc.teamfive.airreserve.models.Airport;
+import edu.uncc.teamfive.airreserve.models.CreditCard;
 
 /**
  * 
@@ -55,12 +59,14 @@ public class AirportControllerTest {
 	private AirportController classUnderTest;
 	private MockMvc mockMvc;
 	private APIServices apiServices;
+	private BookingService bookingService;
 
 	@BeforeEach
 	public void setup() {
 		classUnderTest = new AirportController();
 		mockMvc = MockMvcBuilders.standaloneSetup(classUnderTest).build();
 		apiServices = new APIServices();
+		bookingService = new BookingService();
 	}
 
 	@DisplayName("when application tries the /airports api, the values that we have injected are as expected")
@@ -170,5 +176,95 @@ public class AirportControllerTest {
 		ReflectionTestUtils.setField(classUnderTest, "apiServices", apiServices);
 		assertNotNull(classUnderTest.quotes(model));
 	}
+	
+	@Test
+	public void bookFlight_paymentAcceptedLessThen300() throws IOException {
+		Map<String, Object> model = new HashMap<>();
+		model.put("price", 145.00);
+		model.put("email", "emailId");
+		model.put("uname", "user");
+		model.put("pwd", "password");
+		model.put("fname", "firstName");
+		model.put("lname", "lastName");
+		model.put("mobile", "mobile");
+		model.put("passno","passportNumber");
+		model.put("paymentType", "Credit");
+		model.put("holdername", "holdername");
+		model.put("cardno", "cardno");
+		model.put("cvcpwd", "cvcpwd");
+		model.put("expmonth", 3);
+		model.put("expyear", 1);
+		bookingService.bookNow(model);
+		ReflectionTestUtils.setField(classUnderTest, "bookingService", bookingService);
+		assertNotNull(classUnderTest.book(model));
+	}
+	
+	
+	@Test
+	public void bookFlight_paymentAcceptedEquals300() throws IOException {
+		Map<String, Object> model = new HashMap<>();
+		model.put("price", 300.00);
+		model.put("email", "emailId");
+		model.put("uname", "user");
+		model.put("pwd", "password");
+		model.put("fname", "firstName");
+		model.put("lname", "lastName");
+		model.put("mobile", "mobile");
+		model.put("passno","passportNumber");
+		model.put("paymentType", "Credit");
+		model.put("holdername", "holdername");
+		model.put("cardno", "cardno");
+		model.put("cvcpwd", "cvcpwd");
+		model.put("expmonth", 3);
+		model.put("expyear", 1);
+		bookingService.bookNow(model);
+		ReflectionTestUtils.setField(classUnderTest, "bookingService", bookingService);
+		assertNotNull(classUnderTest.book(model));
+	}
+	
+	@Test
+	public void bookFlight_paymentNotAcceptedGreaterThen300() throws IOException {
+		Map<String, Object> model = new HashMap<>();
+		model.put("price", 350.00);
+		model.put("email", "emailId");
+		model.put("uname", "user");
+		model.put("pwd", "password");
+		model.put("fname", "firstName");
+		model.put("lname", "lastName");
+		model.put("mobile", "mobile");
+		model.put("passno","passportNumber");
+		model.put("paymentType", "Credit");
+		model.put("holdername", "holdername");
+		model.put("cardno", "cardno");
+		model.put("cvcpwd", "cvcpwd");
+		model.put("expmonth", 3);
+		model.put("expyear", 1);
+		
+		bookingService.bookNow(model);
+		ReflectionTestUtils.setField(classUnderTest, "bookingService", bookingService);
+		assertNotNull(classUnderTest.book(model));
+	}
+	
+	
+	@Test
+	public void bookFlight_ExceptionIfNotCredit() throws IOException {
+		assertThrows(NullPointerException.class, () -> {
+		Map<String, Object> model = new HashMap<>();
+		model.put("price", 350.00);
+		model.put("email", "emailId");
+		model.put("uname", "user");
+		model.put("pwd", "password");
+		model.put("fname", "firstName");
+		model.put("lname", "lastName");
+		model.put("mobile", "mobile");
+		model.put("passno","passportNumber");
+		model.put("paymentType", "Debit");
+		
+		bookingService.bookNow(model);
+		ReflectionTestUtils.setField(classUnderTest, "bookingService", bookingService);
+		classUnderTest.book(model);
+		});
+	}
+	
 
 }

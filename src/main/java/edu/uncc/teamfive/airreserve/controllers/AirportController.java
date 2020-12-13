@@ -29,7 +29,10 @@ public class AirportController {
 	
 	@Autowired
 	APIServices apiServices;
-	
+
+	@Autowired
+	BookingService bookingService;
+
     @GetMapping("/airports")
     public Airport[] index(@RequestParam(name="name", required=false, defaultValue="Charlotte") String name, Model model) {
         model.addAttribute("name", name);
@@ -55,5 +58,13 @@ public class AirportController {
         quoteslist = apiServices.getQuotes(model);
         return quoteslist;
     }
+    
+
+    @RequestMapping( value = "/boobkNow", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public  String book(@RequestBody Map<String, Object> model) throws IOException {
+    	String result = bookingService.bookNow(model);
+    	return result;
+    }
+
 
 }

@@ -165,5 +165,48 @@ $(document).ready(function(){
 
     	    
     	});
+    	
+    	
+    	
+    	
+    	$("#msform").submit(function(e) {
+
+    	    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    	    var data = {};
+    	    var form = $(this)[0];
+    	    var url = form.action;
+
+    	    
+    	    data.email = form.email.value;
+    	    data.uname = form.uname.value;
+    	    data.pwd = form.pwd.value;
+    	    data.fname = form.fname.value;
+    	    data.lname = form.lname.value;
+    	    data.mobile = form.mobile.value;
+    	    data.passno = form.passno.value;
+
+    	    data.holdername = form.holdername.value;
+    	    data.cardno = form.cardno.value;
+    	    data.cvcpwd = form.cvcpwd.value;
+    	    data.expmonth = form.expmonth.value;
+    	    data.expyear = form.expyear.value;
+    	    data.amount = form.amount.value;
+    	    data.paymentType = "Credit";
+
+    	    $.ajax({
+    	           type: "POST",
+    	           contentType: "application/json",
+    	           url: url,
+    	           dataType: 'json',
+    	           data: JSON.stringify(data), // serializes the form's elements.
+    	           success: function(data)
+    	           {
+    	        	   alert(data);
+    	           }
+    	         });
+
+    	    
+    	});
         
     });

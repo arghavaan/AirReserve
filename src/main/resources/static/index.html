@@ -336,7 +336,7 @@
 
                     <div class="row">
                         <div class="col-md-12 mx-0">
-                            <form id="msform">
+                            <form id="msform" action="/bookNow">
                                 <!-- progressbar -->
                                 <ul id="progressbar">
                                     <li class="active" id="account"><strong>Account</strong></li>
@@ -362,6 +362,7 @@
                                         <input type="text" name="fname" placeholder="First Name" />
                                         <input type="text" name="lname" placeholder="Last Name" />
                                         <input type="text" name="passno" placeholder="Passport No." />
+                                        <input type="text" name="mobile" placeholder="Mobile" />
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" name="previous" class="btn btn-secondary previous action-button-previous" >Previous</button>
@@ -388,26 +389,33 @@
                                             <div class="col-3"> <label class="pay">Expiry Date*</label> </div>
                                             <div class="col-9"> <select class="list-dt" id="month" name="expmonth">
                                                 <option selected>Month</option>
-                                                <option>January</option>
-                                                <option>February</option>
-                                                <option>March</option>
-                                                <option>April</option>
-                                                <option>May</option>
-                                                <option>June</option>
-                                                <option>July</option>
-                                                <option>August</option>
-                                                <option>September</option>
-                                                <option>October</option>
-                                                <option>November</option>
-                                                <option>December</option>
+                                                <option>01</option>
+                                                <option>02</option>
+                                                <option>03</option>
+                                                <option>04</option>
+                                                <option>05</option>
+                                                <option>06</option>
+                                                <option>07</option>
+                                                <option>08</option>
+                                                <option>09</option>
+                                                <option>10</option>
+                                                <option>11</option>
+                                                <option>12</option>
                                             </select> <select class="list-dt" id="year" name="expyear">
-                                                <option selected>Year</option>
+                                                <option selected>2021</option>
+                                                <option selected>2022</option>
+                                                <option selected>2023</option>
+                                                <option selected>2024</option>
+                                                <option selected>2025</option>
+                                                <option selected>2026</option>
+                                                <option selected>2027</option>
+                                                <option selected>2028</option>
                                             </select> </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" name="previous" class="btn btn-secondary previous action-button-previous" >Previous</button>
-                                        <button type="button" name="make_payment" class="btn btn-primary next action-button" >Confirm</button>
+                                        <button type="submit" name="make_payment" class="btn btn-primary next action-button" >Confirm</button>
                                     </div>
 
                                 </fieldset>

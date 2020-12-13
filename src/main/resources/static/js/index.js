@@ -1,4 +1,5 @@
 var allFlights = [];
+var selectedFlight = {};
 
 function setDetails(i){
 	var data = allFlights[i];
@@ -6,6 +7,7 @@ function setDetails(i){
 	$('#dtl-to').html(data.Destination.PlaceName + " (" + data.Destination.CountryName + ")");
 	$('#dtl-price').html("$" + data.Price);
 	$('#dtl-al').html(data.Carrier.Name);
+	selectedFlight = data;
 }
 
 $(document).ready(function(){
@@ -191,7 +193,8 @@ $(document).ready(function(){
     	    data.cvcpwd = form.cvcpwd.value;
     	    data.expmonth = form.expmonth.value;
     	    data.expyear = form.expyear.value;
-    	    data.amount = form.amount.value;
+    	    data.flightDetails = selectedFlight;
+    	    data.price = selectedFlight.Price;
     	    data.paymentType = "Credit";
 
     	    $.ajax({

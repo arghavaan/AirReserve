@@ -29,6 +29,7 @@ public class QuoteViewModel {
 	@JsonProperty("Carrier")
     private Carrier carrier;
 
+		
 	
 	@JsonProperty("QuoteId")
 	public String getQuoteId() {

@@ -7,17 +7,19 @@ import org.springframework.stereotype.Service;
 import edu.uncc.teamfive.airreserve.models.BookingModel;
 import edu.uncc.teamfive.airreserve.models.CreditCard;
 import edu.uncc.teamfive.airreserve.models.Person;
+import edu.uncc.teamfive.airreserve.models.QuoteViewModel;
 
 @Service
 public class BookingService {
 
 	public String bookNow(Map<String, Object> model) {
 		String result = "";
-		Double amount = Double.parseDouble(model.get("amount").toString());
+		Double amount = Double.parseDouble(model.get("price").toString());
 		
     	BookingModel bookingModel = new BookingModel();
     	bookingModel.setPerson(new Person());
-
+    	bookingModel.setQuoteViewModel(new QuoteViewModel());
+    	
     	bookingModel.getPerson().setEmailId(model.get("email").toString());
     	bookingModel.getPerson().setUserName(model.get("uname").toString());
     	bookingModel.getPerson().setPassword(model.get("pwd").toString());
@@ -38,9 +40,9 @@ public class BookingService {
         
     	Boolean isAccepted = bookingModel.getPaymentMethod().acceptPayment(amount);
     	if(isAccepted) {
-    		result = "Success!!";
+    		result = "True";
     	}else {
-    		result = "Fail!!";
+    		result = "False";
     	}
     	
     	return result;

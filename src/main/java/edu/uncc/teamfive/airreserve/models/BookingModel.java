@@ -4,6 +4,9 @@ public class BookingModel {
 
 	private Person person;
 	private PaymentMethod paymentMethod;
+	private QuoteViewModel quoteViewModel;
+	
+	
 	public Person getPerson() {
 		return person;
 	}
@@ -15,6 +18,12 @@ public class BookingModel {
 	}
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
 		this.paymentMethod = paymentMethod;
+	}
+	public QuoteViewModel getQuoteViewModel() {
+		return quoteViewModel;
+	}
+	public void setQuoteViewModel(QuoteViewModel quoteViewModel) {
+		this.quoteViewModel = quoteViewModel;
 	}
 	
 	

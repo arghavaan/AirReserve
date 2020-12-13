@@ -60,7 +60,7 @@ public class AirportController {
     }
     
 
-    @RequestMapping( value = "/boobkNow", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( value = "/bookNow", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public  String book(@RequestBody Map<String, Object> model) throws IOException {
     	String result = bookingService.bookNow(model);
     	return result;

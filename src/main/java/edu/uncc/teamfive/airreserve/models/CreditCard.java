@@ -19,8 +19,16 @@ public class CreditCard implements PaymentMethod {
 	
 	@Override
 	public Boolean acceptPayment(Double amount) {
-		// TODO Auto-generated method stub
-		return null;
+		Boolean isSuccessful = Boolean.TRUE;
+		
+		if(balance < amount) {
+			isSuccessful = Boolean.FALSE;
+		}else {
+			balance -= amount;
+		}
+		
+		return isSuccessful;
+		
 	}
 
 	public String getCardHolderName() {

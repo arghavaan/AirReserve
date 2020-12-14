@@ -11,6 +11,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" />
 	<style>
+	
+        .hideError {
+            display: none;
+        }
+		
+		.err-msg{
+			margin-top: -28px;
+			margin-bottom: 10px;
+			margin-left: 7px;
+            color: #DC3C14;
+		}
+		
+        .showError {
+            display: block;
+        }
 
         .flight-indirect{
             color: orange;
@@ -347,10 +362,14 @@
                                 <fieldset>
                                     <div class="form-card">
                                         <h2 class="fs-title">Account Information</h2>
-                                        <input type="email" name="email" placeholder="Email Id" />
-                                        <input type="text" name="uname" placeholder="UserName" />
-                                        <input type="password" name="pwd" placeholder="Password" />
-                                        <input type="password" name="cpwd" placeholder="Confirm Password" />
+                                        <input class="required" required type="email" name="email" placeholder="Email Id" />
+                                        <span id="span-email" class="required err-msg hideError">Please Enter Valid Email Address</span>
+                                        <input class="required" required type="text" name="uname" placeholder="UserName" />
+                                        <span id="span-uname" class="required err-msg hideError">Please Enter Valid Username</span>
+                                        <input class="required" required type="password" name="pwd" placeholder="Password" />
+                                        <span id="span-pwd" class="required err-msg hideError">Please Enter Valid Password</span>
+                                        <input class="required" required type="password" name="cpwd" placeholder="Confirm Password" />
+                                        <span id="span-cpwd" class="required err-msg hideError">Please Repeat Password</span>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" name="next" class="btn btn-primary next action-button" >Next</button>
@@ -359,10 +378,14 @@
                                 <fieldset>
                                     <div class="form-card">
                                         <h2 class="fs-title">Personal Information</h2>
-                                        <input type="text" name="fname" placeholder="First Name" />
-                                        <input type="text" name="lname" placeholder="Last Name" />
-                                        <input type="text" name="passno" placeholder="Passport No." />
-                                        <input type="text" name="mobile" placeholder="Mobile" />
+                                        <input class="required" required type="text" name="fname" placeholder="First Name" />
+                                        <span id="span-fname" class="required err-msg hideError">Please Enter First Name</span>
+                                        <input class="required" required type="text" name="lname" placeholder="Last Name" />
+                                        <span id="span-lname" class="required err-msg hideError">Please Enter Last Name</span>
+                                        <input class="required" required type="text" name="passno" placeholder="Passport No." />
+                                        <span id="span-passno" class="required err-msg hideError">Please Enter Passport Number</span>
+                                        <input class="required" required type="text" name="mobile" placeholder="Mobile" />
+                                        <span id="span-mobile" class="required err-msg hideError">Please Enter Valid Mobile Number</span>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" name="previous" class="btn btn-secondary previous action-button-previous" >Previous</button>
@@ -374,15 +397,18 @@
                                         <h2 class="fs-title">Payment Information</h2>
                                         <div class="mb-3"><img src="images/cc.png" style="width: 100%"></div>
                                         <label class="pay">Card Holder Name*</label>
-                                        <input type="text" name="holdername" placeholder="" />
+                                        <input class="required" required id="holdername" type="text" name="holdername" placeholder="" />
+                                        <span id="span-holdername" class="required err-msg hideError">Please Enter Card Holder Name</span>
                                         <div class="row">
                                             <div class="col-9">
                                                 <label class="pay">Card Number*</label>
-                                                <input type="text" name="cardno" placeholder="" />
+                                                <input class="required" required type="text" id="cardno" name="cardno" placeholder="" />
+                                                <span id="span-cardno" class="required err-msg hideError">Please Enter Card Number</span>
                                             </div>
                                             <div class="col-3">
                                                 <label class="pay">CVC*</label>
-                                                <input type="password" name="cvcpwd" placeholder="***" />
+                                                <input class="required" required id="cvv2" type="password" name="cvcpwd" placeholder="***" />
+                                                <span id="span-cvv2" class="required err-msg hideError">Please Enter Card CVC</span>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -450,6 +476,8 @@
 			<h4>Book Air Tickets</h4>
             <form id="flightSearch" autocomplete="off" action="getQuotes">
                 <div>
+
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#wizardModal">Book Flight</button>
                     <label class="p-1">
                         Flight Type :
                     </label>

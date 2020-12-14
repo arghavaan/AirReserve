@@ -126,7 +126,7 @@ public class APIServicesTest {
 		Map<String, Object> model = new HashMap<>();
 	     model.put("from", "CLT-sky");
 	     model.put("to", "JFK-sky");
-	     model.put("departure", "2020-12-16");
+	     model.put("departure", "2020-12-24");
 		model.put("options", "RoundTrip");
 		model.put("return", "2020-12-26");
 		QuoteViewModel quoteViewmodel = new QuoteViewModel();

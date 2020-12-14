@@ -1,5 +1,6 @@
 var allFlights = [];
 var selectedFlight = {};
+var selectedFlightIndex;
 
 function setDetails(i){
 	var data = allFlights[i];
@@ -8,6 +9,7 @@ function setDetails(i){
 	$('#dtl-price').html("$" + data.Price);
 	$('#dtl-al').html(data.Carrier.Name);
 	selectedFlight = data;
+	selectedFlightIndex = i;
 }
 
 $(document).ready(function(){
@@ -206,7 +208,13 @@ $(document).ready(function(){
     	           data: JSON.stringify(data), // serializes the form's elements.
     	           success: function(data)
     	           {
-    	        	   alert(data);
+    	        	   if(data.isAccepted){
+    	        		   $("#tripid").text(data.tripId);
+    	        		   var bookedFlight = allFlights[selectedFlightIndex];
+            			   var bookedFlightHtml =$("<div class='list-group'> <div href='#' class='list-group-item list-group-item-action'> <div class='d-flex w-100 justify-content-between'> <h5>" + bookedFlight.Origin.PlaceName + "  <span> &#9992; </span>  " + bookedFlight.Destination.PlaceName + "</h5> <small><b>$" + bookedFlight.Price + "</b></small> </div> <span class=\"flight-" + (bookedFlight.IsDirect ? "direct" : "indirect") + "\"> " + (bookedFlight.IsDirect ? "Direct Flight" : "Indirect Flight")  + "</span> <span class='ml-2'>" + bookedFlight.Carrier.Name + "</span></div></div>");
+      	       	    		$("#confirmation").append(bookedFlightHtml);
+    	        		   
+    	        	   }
     	           }
     	         });
 

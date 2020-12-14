@@ -79,7 +79,7 @@ public class BookingServiceTest {
 		model.put("lname", "patel");
 		model.put("mobile", "9802267034");
 		model.put("passno", "passNumber");
-		model.put("paymentType", "Credit");
+		model.put("paymentType", "Debit");
 		model.put("holdername", "holdername");
 		model.put("cardno", "cardno");
 		model.put("cvcpwd","cvcpwd");

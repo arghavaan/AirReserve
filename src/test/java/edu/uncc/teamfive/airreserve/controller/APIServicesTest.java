@@ -36,6 +36,14 @@ public class APIServicesTest {
 	}
 	
 	@Test
+	public void getPlaces_OtherThenGivenPlace () throws IOException {
+		FastPlace[] place = classUnderTest.getPlaces("New York");
+		 List<Object> placelist = Arrays.asList(place);
+		assertNotNull(placelist);
+		
+	}
+	
+	@Test
 	public void getPlaces_ValuesEmpty() throws IOException {
 		FastPlace[] place = classUnderTest.getPlaces("");
 		 List<Object> placelist = Arrays.asList(place);
